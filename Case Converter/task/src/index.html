@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Case Converter</title>
+    <style rel="stylesheet">
+        :root {
+            --background-main-color: lightgrey;
+            --main-color: #333333
+        }
+        body {
+            background-color: var(--background-main-color, #fff);
+            color: var(--main-color, #000);
+        }
+        button { background-color: darkorange }
+        .title {
+            text-align: center;
+            font: 20pt bolt Tahoma,sans-serif;
+        }
+        textarea {
+            width: 100%;
+            box-sizing: border-box
+        }
+        .buttons-container {
+            display: flex;
+            justify-content: space-evenly
+        }
+        .container {
+            margin: 0 auto;
+            width: 50%
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="title">Case Converter</div>
+    <textarea name="test" id="test" cols="80" rows="10"></textarea><br>
+    <div class="buttons-container">
+        <button id="upper-case">toUpperCase</button>
+        <button id="lower-case">toLowerCase</button>
+        <button id="proper-case">toProperCase</button>
+        <button id="sentence-case">toSentenceCase</button>
+        <button id="save-text-file">Save Text File</button>
+    </div>
+</div>
+<script type="text/javascript">
+    const element = document.getElementsByTagName('textarea').test;
+
+    function download(filename, text) {
+        let element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+    }
+
+    function properCase(elem){
+        let words = elem.split(" ");
+        let wordsNew = [];
+        words.forEach(function(value) {
+            wordsNew.push(value.substring(0,1).toUpperCase() + value.substring(1).toLowerCase());
+        })
+        return wordsNew.join(" ");
+    }
+
+    function sentenceCase(elem){
+        let words = elem.split(". ");
+        let wordsNew = [];
+        words.forEach(function(value) {
+            wordsNew.push(value.substring(0,1).toUpperCase() + value.substring(1).toLowerCase());
+        })
+        return wordsNew.join(". ");
+    }
+
+    document.getElementById("upper-case").addEventListener('click', function(){
+        element.value = element.value.toUpperCase()
+
+    });
+
+    document.getElementById("lower-case").addEventListener("click", function(){
+        element.value =element.value.toLowerCase()
+    });
+
+    document.getElementById("proper-case").addEventListener("click", function(){
+        element.value = properCase(element.value)
+    });
+
+    document.getElementById("sentence-case").addEventListener("click", function(){
+        element.value = sentenceCase(element.value)
+    });
+
+    document.getElementById("save-text-file").addEventListener("click", function(){
+        download("text.txt", element.value)
+    });
+</script>
+</body>
+</html>
